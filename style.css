@@ -1,0 +1,84 @@
+body{
+    font-family: Arial;
+    background: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container{
+    width: 90%;
+    max-width: 1000px;
+    margin: 30px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+h1,h2{
+    text-align: center;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+input,
+select,
+textarea,
+button{
+    padding: 10px;
+    font-size: 16px;
+}
+
+button{
+    cursor: pointer;
+}
+
+table{
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table,
+th,
+td{
+    border: 1px solid #ccc;
+}
+
+th,
+td{
+    padding: 10px;
+    text-align: center;
+}
+
+.approved{
+    color: green;
+    font-weight: bold;
+}
+
+.rejected{
+    color: red;
+    font-weight: bold;
+}
+
+.pending{
+    color: orange;
+    font-weight: bold;
+}
+
+@media(max-width:768px){
+
+    table{
+        font-size: 12px;
+    }
+
+    input,
+    select,
+    textarea,
+    button{
+        font-size: 14px;
+    }
+}
