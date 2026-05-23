@@ -1,7 +1,10 @@
+let editId = null
 if(currentUser.role === "employee"){
 
     const leaveForm =
     document.getElementById("leaveForm");
+
+  
 
     leaveForm.addEventListener("submit", function(e){
 
@@ -10,37 +13,66 @@ if(currentUser.role === "employee"){
         const requests =
         JSON.parse(localStorage.getItem("leaveRequests"));
 
-        const newRequest = {
+        const leaveType =
+        document.getElementById("leaveType").value;
 
-            id: Date.now(),
+        const startDate =
+        document.getElementById("startDate").value;
 
-            employeeId: currentUser.id,
+        const endDate =
+        document.getElementById("endDate").value;
 
-            employeeName: currentUser.username,
+        const reason =
+        document.getElementById("reason").value;
 
-            leaveType:
-            document.getElementById("leaveType").value,
+        // UPDATE EXISTING REQUEST
+        if(editId){
 
-            startDate:
-            document.getElementById("startDate").value,
+            const request = requests.find(
+                req => req.id === editId
+            );
 
-            endDate:
-            document.getElementById("endDate").value,
+            request.leaveType = leaveType;
+            request.startDate = startDate;
+            request.endDate = endDate;
+            request.reason = reason;
 
-            reason:
-            document.getElementById("reason").value,
+            alert("Leave Updated");
 
-            status: "Pending"
-        };
+            editId = null;
+        }
 
-        requests.push(newRequest);
+        // CREATE NEW REQUEST
+        else{
+
+            const newRequest = {
+
+                id: Date.now(),
+
+                employeeId: currentUser.id,
+
+                employeeName: currentUser.username,
+
+                leaveType: leaveType,
+
+                startDate: startDate,
+
+                endDate: endDate,
+
+                reason: reason,
+
+                status: "Pending"
+            };
+
+            requests.push(newRequest);
+
+            alert("Leave Applied");
+        }
 
         localStorage.setItem(
             "leaveRequests",
             JSON.stringify(requests)
         );
-
-        alert("Leave Applied");
 
         location.reload();
     });
@@ -86,8 +118,11 @@ function displayEmployeeLeaves(){
                     req.status === "Pending"
 
                     ?
-
                     `
+                    <button onclick="editLeave(${req.id})">
+                    Edit
+                    </button>
+                    
                     <button onclick="deleteLeave(${req.id})">
                     Delete
                     </button>
@@ -120,4 +155,28 @@ function deleteLeave(id){
     );
 
     location.reload();
+}
+
+function editLeave(id){
+
+    const requests =
+    JSON.parse(localStorage.getItem("leaveRequests"));
+
+    const request = requests.find(
+        req => req.id === id
+    );
+
+    document.getElementById("leaveType").value =
+    request.leaveType;
+
+    document.getElementById("startDate").value =
+    request.startDate;
+
+    document.getElementById("endDate").value =
+    request.endDate;
+
+    document.getElementById("reason").value =
+    request.reason;
+
+    editId = id;
 }
